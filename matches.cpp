@@ -4,29 +4,29 @@
 #include<iomanip> // Para setw(), tabular las puntuaciones (estetico)
 using namespace std;
 
-int match(std::string a, int b, std::string c, int d, std::string f, int e){
-	if (b<d && b>e || a == f){
-		e+=3;
-		cout << f << " tiene que ganar a " << c << endl;
+int match(std::string a, int b, std::string c, int d, std::string e, int f){
+	if (b<d && b>=f || a == e){
+		f+=3;
+		cout << e << " tiene que ganar a " << c << endl;
 	} 
-	else if (b<e && b>d || a == c){
+	else if (b<f && b>=d || a == c){
 		d+=3;
-		cout << c << " tiene que ganar a " << f << endl;
+		cout << c << " tiene que ganar a " << e << endl;
 	}
 	else{
-		d+=1; e+=1;
-		cout << c << " tiene que empatar con " << f << endl;
+		d+=1; f+=1;
+		cout << c << " tiene que empatar con " << e << endl;
 	}return d;
 }
 //Es la misma funcio que la anterior "match" pero sin el "cout" y retornado otro valor para cambiar el valor de las variables en la funcion main
-int sameMatch(std::string a, int b, std::string c, int d, std::string f, int e){
-	if (b<d && b>e || a == f)
-		e+=3;
-	else if (b<e && b>d || a == c)
+int sameMatch(std::string a, int b, std::string c, int d, std::string e, int f){
+	if (b<d && b>=f || a == e)
+		f+=3;
+	else if (b<f && b>=d || a == c)
 		d+=3;
 	else{
-		d+=1; e+=1;
-	}return e;
+		d+=1; f+=1;
+	}return f;
 }
 
 int main () {
@@ -34,15 +34,15 @@ int main () {
 	country[0]="Brasil"; country[1]="Colombia"; country[2]="Uruguay"; country[3]="Chile"; country[4]="Argentina";
 	country[5]="Peru"; country[6]="Paraguay"; country[7]="Ecuador"; country[8]="Bolivia"; country[9]="Venezuela";
 	
-	int score[10];//Del dia 2 de Setiembre
+	int score[10];//Del dia 2 de Septiembre
 	score[0]=36; score[1]=25; score[2]=24; score[3]=23; score[4]=23; 
 	score[5]=21; score[6]=21; score[7]=20; score[8]=10; score[9]=7;
 	
 	int a; string z;  
 	cout << "Escriba el nombre del pais al que quiere favorecer: "; cin >> z;
-	for (int i=0;i<10;i++){
-		if (z==country[i])
-			a=i;
+	for (int j=0;j<10;j++){
+		if (z==country[j])
+			a=j;
 	}
 	
 	string x = country[a]; int y = score[a];//Al ser el mismo indice para cada pais lo cambie a una unica variable aunque es mas codigo
