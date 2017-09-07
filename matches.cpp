@@ -1,14 +1,14 @@
-//PROGRAMA QUE DETERMINA LOS MEJORES RESULTADOS DE LOS DIFERENTES PARTIDOS PARA QUE UN EQUIPO SUBA O MANTENGA SU POSICION EL LA TABLA
+//PROGRAMA QUE DETERMINA EL MEJOR RESULTADO DE LOS DIFERENTES PARTIDOS PARA QUE UN EQUIPO SUBA O MANTENGA SU POSICION EL LA TABLA
 //PIDE AL USUARIO EL NOMBRE DEL PAIS Y SEGUN ESO HACE LOS CALCULOS E INDICA CUALES DEBERIAN SER LOS RESULTADOS
 #include<iostream>
 #include<iomanip> // Para setw(), tabular las puntuaciones (estetico)
 using namespace std;
 
 int match(std::string a, int b, std::string c, int d, std::string e, int f){
-	if (b<d && b>=f || a == e){
-		f+=3;
-		cout << e << " tiene que ganar a " << c << endl;
-	} 
+	if (b<d && b>=f || a == e){//SE COMPARA al equipo favorecido con las puntuaciones de los equipos que jugaran
+		f+=3;//para saber si el equivo favorecido (str a, int b) esta jugando dentro de este partido se debe comparar los nombres (str a == str e)
+		cout << e << " tiene que ganar a " << c << endl;//Dos equipos puenden tener el mismo puntaje y pero no el mismo nombre
+	}//al comparar los nombre si o si el equipo favorecido ganara
 	else if (b<f && b>=d || a == c){
 		d+=3;
 		cout << c << " tiene que ganar a " << e << endl;
@@ -38,7 +38,7 @@ int main () {
 	score[0]=36; score[1]=25; score[2]=24; score[3]=23; score[4]=23; 
 	score[5]=21; score[6]=21; score[7]=20; score[8]=10; score[9]=7;
 //Score tiene hasta 20 valores para que no remplace los valores originales y genere problemas
-	int a; string z;  
+	int a; string z;
 	cout << "Escriba el nombre del pais al que quiere favorecer: "; cin >> z;
 	for (int j=0;j<10;j++){
 		if (z==country[j])
@@ -60,8 +60,20 @@ int main () {
 	score[12] = sameMatch(x,y, country[6], score[6], country[2], score[2]);
 //Se ahorraria muchas lineas de codigo si se podria cambiar directamente los valores de las variables "score"
 	cout << "Y las puntuaciones cambiarian a:\n";
+//elegi insertion sort porque para mi es el mas sencillo y facil de entender ademas de que no llega (en este caso) a un O(n^2)
+	for (int i=10;i<20;i++){
+		int m=i,n=score[i];//se necesita 2 valores enteros: uno que almacene el indice y otro el valor
+		string o = country[i-10];
+		while ((m > 10) && (score[m-1] < n)){//se inicia en 10 porque desde esa posicion estan los nuevos puntajes
+			score[m] = score[m-1];//se pierde el valor de la posicion m 
+			country[m-10] = country[m-11];//es m-10 porque el indice de country empieza en 0 "(10-10)"
+			m--;//se reduce el valor en 1
+		}
+		score[m] = n;//se otorga el valor almacenado antes del while
+		country[m-10] = o;
+	}
 	for (int i=10;i<20;i++)//Imprime todos los paises con sus respectivas puntuaciones
 		cout << setw(13) << country[i-10] << "  " << score[i] << endl;
-	system("pause");
-	return 0;//Se podria rehacer el orden de la tabla con un algoritmo de ordenamiento pero ya es mucho codigo(creo)
+	system("pause");//LA TABLA DE POSICIONES YA ESTA ORDENADA
+	return 0;
 }
